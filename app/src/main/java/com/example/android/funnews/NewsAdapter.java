@@ -39,7 +39,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView webPublicationDateView = (TextView) listItemView.findViewById(R.id.webPublicationDate);
         ImageView appImageView = (ImageView) listItemView.findViewById(R.id.appImageView);
         //7/27/18 - LSB - We don't want to put the long url in there, so no need to add it as a TextView
-       // TextView webUrlView = (TextView) listItemView.findViewById(R.id.webUrl);
+        // TextView webUrlView = (TextView) listItemView.findViewById(R.id.webUrl);
 
         News currentNews = getItem(position);
 
@@ -52,11 +52,11 @@ public class NewsAdapter extends ArrayAdapter<News> {
         String author = currentNews.getAuthor();
         authorView.setText(author);
 
-        if (currentNews.getImage()!= null) {
+        if (currentNews.getImage() != null) {
             Bitmap appImage = currentNews.getImage();
             appImageView.setImageBitmap(appImage);
-        }
-        else{
+            appImageView.setVisibility(ImageView.VISIBLE);
+        } else {
             appImageView.setVisibility(ImageView.GONE);
         }
 
@@ -68,7 +68,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         //7/27/18 - LSB - Remove the time from the Date/Time Values
         //7/27/18 - LSB - Learned lots about date/time  on the Slack ABND Bulletin Board
-        if(webPublicationDate.contains(REMOVETIME)) {
+        if (webPublicationDate.contains(REMOVETIME)) {
             String[] parts = webPublicationDate.split(REMOVETIME);
             webPublicationDate = parts[0];
         }

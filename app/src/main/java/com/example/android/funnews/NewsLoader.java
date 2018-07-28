@@ -1,4 +1,5 @@
 package com.example.android.funnews;
+
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 

@@ -1,53 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <!-- 7/24/18 - LSB - Learned lots about formatting on the Slack ABND Bulletin Board-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/appImageView"
+        android:layout_width="@dimen/webImageSize"
+        android:layout_height="@dimen/webImageSize"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/standardPaddingMargin"
+        android:paddingLeft="@dimen/standardPaddingMargin"
+        android:scaleType="centerCrop" />
 
-
-    <TextView
-        android:id="@+id/webTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        tools:text="All About Crafts"
-        android:textSize="20sp"/>
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <ImageView android:id="@+id/appImageView"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_margin="10dip"/>
+        <TextView
+            android:id="@+id/webTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/standardPaddingMargin"
+            android:paddingTop="@dimen/standardPaddingMargin"
+            android:textAllCaps="true"
+            tools:text="Blah Blah Blah" />
 
-    <TextView
-        android:id="@+id/sectionName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingLeft="16dp"
-        tools:text="Section Header" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/standardPaddingMargin"
+                android:textStyle="italic"
+                tools:text="Lori B as Author" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:paddingLeft="16dp"
-        tools:text="Jane Doe" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/webPublicationDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
+            <TextView
+                android:id="@+id/webPublicationDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/standardPaddingMargin"
+                tools:text="12/23/2017" />
+        </LinearLayout>
 
-        android:textSize="12sp"
-        tools:text="Dec 23, 2017" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/sectionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/standardPaddingMargin"
+                tools:text="Crafts" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
 //7/22/18 - LSB - Some Utilities to get the data...
 public final class QueryUtils {
 
@@ -31,6 +33,7 @@ public final class QueryUtils {
 
     private QueryUtils() {
     }
+
     public static List<News> fetchNewsData(String requestUrl) {
         //7/17/18 - LSB for testing slowness  Keep this
 //        try {
@@ -123,7 +126,6 @@ public final class QueryUtils {
         }
 
 
-
         // 7/24/18 - Create an Empty Array
         List<News> articles = new ArrayList<>();
 
@@ -144,6 +146,7 @@ public final class QueryUtils {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             for (int i = 0; i < baseJsonResponseResults.length(); i++) {
                 //7/24/18 - LSB - Loop thru the array
                 JSONObject currentItem = baseJsonResponseResults.getJSONObject(i);
@@ -152,21 +155,24 @@ public final class QueryUtils {
                 JSONObject tagsObject = tagsArray.optJSONObject(0);
                 String author;
                 Bitmap appImage;
-                if (tagsObject!= null){
+                if (tagsObject != null) {
                     author = "Article by: " + tagsObject.optString("webTitle");
-                  //  Log.e("export", "extractFeatureFromJson:" + author);
-
-                    String webImage = tagsObject.optString("bylineImageUrl");
-                    appImage =  ((BitmapDrawable) LoadImageFromWebOperations(webImage)).getBitmap();
-                }
-                else{
+                    //  Log.e("export", "extractFeatureFromJson:" + author);
+                } else {
                     author = "Author is not credited";
-                   // Log.e("export", "extractFeatureFromJson:" + author);
+                    // Log.e("export", "extractFeatureFromJson:" + author);
+
+                }
+                //7/28/18 - LSB - Lots of Advice from Slace on how to handle null images
+                try {
+                    String webImage = tagsObject.optString("bylineImageUrl");
+                    appImage = ((BitmapDrawable) LoadImageFromWebOperations(webImage)).getBitmap();
+                } catch (Exception e) {
                     appImage = null;
                 }
 
                 String sectionName = currentItem.optString("sectionName");
-               // Log.e("sectionName", "extractFeatureFromJson:" + sectionName);
+                // Log.e("sectionName", "extractFeatureFromJson:" + sectionName);
 
                 String webTitle = currentItem.optString("webTitle");
                 //Log.e("webTitle", "extractFeatureFromJson:" + webTitle);
@@ -184,8 +190,11 @@ public final class QueryUtils {
         } catch (JSONException e) {
             Log.e("http utils", "Problem parsing the item JSON results", e);
         }
+
+
         return articles;
     }
+
     //7/27/18 - LSB - Article about how to add an image   https://stackoverflow.com/questions/3118691/android-make-an-image-at-a-url-equal-to-imageviews-image
     public static Drawable LoadImageFromWebOperations(String url) {
         try {

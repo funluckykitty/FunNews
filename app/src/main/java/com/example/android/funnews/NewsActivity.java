@@ -107,8 +107,6 @@ public class NewsActivity extends AppCompatActivity
         }
     }
 
-
-
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         mAdapter.clear();
