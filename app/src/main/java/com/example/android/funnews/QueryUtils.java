@@ -1,8 +1,14 @@
 package com.example.android.funnews;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,8 +122,12 @@ public final class QueryUtils {
             return null;
         }
 
+
+
         // 7/24/18 - Create an Empty Array
         List<News> articles = new ArrayList<>();
+
+
         try {
 
             // 7/24/18 = LSB Create a JSONObject from the JSON response string
@@ -141,13 +151,18 @@ public final class QueryUtils {
 
                 JSONObject tagsObject = tagsArray.optJSONObject(0);
                 String author;
+                Bitmap appImage;
                 if (tagsObject!= null){
-                    author = tagsObject.optString("webTitle");
+                    author = "Article by: " + tagsObject.optString("webTitle");
                   //  Log.e("export", "extractFeatureFromJson:" + author);
+
+                    String webImage = tagsObject.optString("bylineImageUrl");
+                    appImage =  ((BitmapDrawable) LoadImageFromWebOperations(webImage)).getBitmap();
                 }
                 else{
                     author = "Author is not credited";
                    // Log.e("export", "extractFeatureFromJson:" + author);
+                    appImage = null;
                 }
 
                 String sectionName = currentItem.optString("sectionName");
@@ -162,16 +177,26 @@ public final class QueryUtils {
                 String webPublicationDate = currentItem.optString("webPublicationDate");
                 //Log.e("webPublicationDate", "extractFeatureFromJson:" + webPublicationDate);
 
-                News article = new News(author, sectionName, webTitle, webUrl, webPublicationDate);
-
+                News article = new News(webTitle, sectionName, author, webPublicationDate, webUrl, appImage);
                 articles.add(article);
             }
 
         } catch (JSONException e) {
-
             Log.e("http utils", "Problem parsing the item JSON results", e);
         }
         return articles;
+    }
+    //7/27/18 - LSB - Article about how to add an image   https://stackoverflow.com/questions/3118691/android-make-an-image-at-a-url-equal-to-imageviews-image
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "");
+            return d;
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Image failed", e);
+            return null;
+        }
+
     }
 
 }

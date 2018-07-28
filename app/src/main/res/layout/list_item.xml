@@ -8,12 +8,20 @@
     android:paddingRight="16dp"
     android:paddingStart="16dp">
 
+
+
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/webTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        tools:text="All About Crafts" />
+        tools:text="All About Crafts"
+        android:textSize="20sp"/>
+
+    <ImageView android:id="@+id/appImageView"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="10dip"/>
 
     <TextView
         android:id="@+id/sectionName"
@@ -25,7 +33,7 @@
 
 
     <TextView
-        android:id="@+id/webTitle"
+        android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -37,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
+
         android:textSize="12sp"
         tools:text="Dec 23, 2017" />
 

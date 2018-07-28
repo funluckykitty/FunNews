@@ -1,16 +1,18 @@
 package com.example.android.funnews;
 
-
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -53,9 +55,21 @@ public class NewsActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 News currentNews = mAdapter.getItem(position);
+
+                //7/27/18 - LSB - Great Article about Intents  https://developer.android.com/training/basics/intents/sending
+                //7/27/18 - LSB - Uri newsUri = Uri.parse("http://www.Google.com");
+                //7/27/18 - LSB - Log.e("URL", "URLHERE:" + Uri.parse(currentNews.getWebUrl()));
                 Uri newsUri = Uri.parse(currentNews.getWebUrl());
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
-                startActivity(websiteIntent);
+
+                //7/27/18 - Get the list of available intents, and if there's a safe one, use it.
+                PackageManager packageManager = getPackageManager();
+                List<ResolveInfo> activities = packageManager.queryIntentActivities(websiteIntent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+                boolean isIntentSafe = activities.size() > 0;
+                if (isIntentSafe) {
+                    startActivity(websiteIntent);
+                }
             }
         });
 
@@ -92,6 +106,8 @@ public class NewsActivity extends AppCompatActivity
             mAdapter.addAll(article);
         }
     }
+
+
 
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
