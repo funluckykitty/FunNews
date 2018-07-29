@@ -57,12 +57,10 @@ public class NewsActivity extends AppCompatActivity
                 News currentNews = mAdapter.getItem(position);
 
                 //7/27/18 - LSB - Great Article about Intents  https://developer.android.com/training/basics/intents/sending
-                //7/27/18 - LSB - Uri newsUri = Uri.parse("http://www.Google.com");
-                //7/27/18 - LSB - Log.e("URL", "URLHERE:" + Uri.parse(currentNews.getWebUrl()));
                 Uri newsUri = Uri.parse(currentNews.getWebUrl());
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
 
-                //7/27/18 - Get the list of available intents, and if there's a safe one, use it.
+                //7/27/18 - LSB - Get the list of available intents, and if there's a safe one, use it.
                 PackageManager packageManager = getPackageManager();
                 List<ResolveInfo> activities = packageManager.queryIntentActivities(websiteIntent,
                         PackageManager.MATCH_DEFAULT_ONLY);
@@ -105,10 +103,24 @@ public class NewsActivity extends AppCompatActivity
             //7/17/18 - LSB to check fill of adapter, comment out
             mAdapter.addAll(article);
         }
+        else
+        {
+            //7/28/18 - LSB - If loses internet connection, display message
+           // mEmptyStateTextView.setText(R.string.no_internet_connection);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         mAdapter.clear();
     }
+
+//7/29/18 - LSB - How to add https://stackoverflow.com/questions/15658687/how-to-use-onresume
+    @Override
+    public void onResume(){
+        super.onResume();
+
+       ///???
+    }
+
 }

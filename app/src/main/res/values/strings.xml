@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Fun News</string>
     <string name="no_internet_connection">No internet connection.</string>
-    <string name="no_news">No articles found.</string>
+    <string name="no_news">No articles found to match your criteria.  Please come back later and try again later.</string>
 </resources>

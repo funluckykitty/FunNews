@@ -35,13 +35,6 @@ public final class QueryUtils {
     }
 
     public static List<News> fetchNewsData(String requestUrl) {
-        //7/17/18 - LSB for testing slowness  Keep this
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -124,11 +117,8 @@ public final class QueryUtils {
         if (TextUtils.isEmpty(articleJSON)) {
             return null;
         }
-
-
         // 7/24/18 - Create an Empty Array
         List<News> articles = new ArrayList<>();
-
 
         try {
 
@@ -157,10 +147,9 @@ public final class QueryUtils {
                 Bitmap appImage;
                 if (tagsObject != null) {
                     author = "Article by: " + tagsObject.optString("webTitle");
-                    //  Log.e("export", "extractFeatureFromJson:" + author);
+
                 } else {
                     author = "Author is not credited";
-                    // Log.e("export", "extractFeatureFromJson:" + author);
 
                 }
                 //7/28/18 - LSB - Lots of Advice from Slace on how to handle null images
@@ -172,16 +161,12 @@ public final class QueryUtils {
                 }
 
                 String sectionName = currentItem.optString("sectionName");
-                // Log.e("sectionName", "extractFeatureFromJson:" + sectionName);
 
                 String webTitle = currentItem.optString("webTitle");
-                //Log.e("webTitle", "extractFeatureFromJson:" + webTitle);
 
                 String webUrl = currentItem.optString("webUrl");
-                //Log.e("webUrl", "extractFeatureFromJson:" + webUrl);
 
                 String webPublicationDate = currentItem.optString("webPublicationDate");
-                //Log.e("webPublicationDate", "extractFeatureFromJson:" + webPublicationDate);
 
                 News article = new News(webTitle, sectionName, author, webPublicationDate, webUrl, appImage);
                 articles.add(article);
@@ -190,7 +175,6 @@ public final class QueryUtils {
         } catch (JSONException e) {
             Log.e("http utils", "Problem parsing the item JSON results", e);
         }
-
 
         return articles;
     }
